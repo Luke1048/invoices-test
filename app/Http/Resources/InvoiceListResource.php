@@ -23,6 +23,7 @@ class InvoiceListResource extends JsonResource
             'currency' => $this->currency,
             'status' => $this->status,
             'issue_date' => $this->issue_date?->toDateString(),
+            'due_date' => $this->due_date?->toDateString(),
             'created_at' => $this->created_at?->toDateTimeString(),
         ];
     }
