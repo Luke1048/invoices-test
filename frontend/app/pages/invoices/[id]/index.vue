@@ -11,6 +11,13 @@
         <div v-else>
             <h1>Invoice {{ invoice.number }}</h1>
 
+            <NuxtLink
+                :to="`/invoices/${invoice.id}/edit`"
+                class="edit-button"
+            >
+                Edit invoice
+            </NuxtLink>
+
             <table class="invoice-table">
                 <tbody>
                 <tr>
@@ -150,5 +157,20 @@ const statusClass = (status) => {
 .badge-rejected {
     background: #fee2e2;
     color: #991b1b;
+}
+
+.edit-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.edit-button:hover {
+    background: #2563eb;
 }
 </style>
