@@ -83,12 +83,12 @@ const config = useRuntimeConfig()
 const router = useRouter()
 const route = useRoute()
 
+const page = computed(() => Number(route.query.page || 1))
+const perPage = computed(() => Number(route.query.per_page || 10))
+
 const apiBase = import.meta.server
     ? config.apiBase
     : config.public.apiBase
-
-const page = computed(() => Number(route.query.page || 1))
-const perPage = computed(() => Number(route.query.per_page || 10))
 
 const { data, pending, error } = await useFetch('/api/invoices', {
     baseURL: apiBase,
