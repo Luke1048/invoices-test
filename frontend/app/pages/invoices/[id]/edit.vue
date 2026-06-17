@@ -7,6 +7,14 @@
         <div v-else>
             <h1>Edit Invoice {{ invoice.number }}</h1>
 
+            <div v-if="successMessage" class="success">
+                {{ successMessage }}
+            </div>
+
+            <div v-if="submitError" class="error-box">
+                {{ submitError }}
+            </div>
+
             <form class="form" @submit.prevent="onSubmit">
                 <div class="field">
                     <label>Net amount</label>
@@ -54,7 +62,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 import { z } from 'zod'
 
 const config = useRuntimeConfig()
@@ -92,6 +100,9 @@ watch(
     { immediate: true }
 )
 
+const successMessage = ref('')
+const submitError = ref('')
+
 const errors = reactive({})
 
 const schema = z.object({
@@ -110,6 +121,9 @@ const grossAmount = computed(() => {
 const onSubmit = async () => {
     if (isLocked.value) return
 
+    successMessage.value = ''
+    submitError.value = ''
+
     errors.net_amount = ''
     errors.vat_amount = ''
     errors.due_date = ''
@@ -126,16 +140,32 @@ const onSubmit = async () => {
         return
     }
 
-    await $fetch(`/api/invoices/${route.params.id}`, {
-        baseURL: apiBase,
-        method: 'put',
-        body: {
-            ...result.data,
-            gross_amount: Number(grossAmount.value),
-        },
-    })
+    try {
+        await $fetch(`/api/invoices/${route.params.id}`, {
+            baseURL: apiBase,
+            method: 'put',
+            body: {
+                ...result.data,
+                gross_amount: Number(grossAmount.value),
+            },
+        })
 
-    router.push(`/invoices/${route.params.id}`)
+        successMessage.value = 'Invoice updated successfully'
+
+        setTimeout(() => {
+            successMessage.value = ''
+        }, 1000)
+
+        setTimeout(() => {
+            router.push(`/invoices/${route.params.id}`)
+        }, 1000)
+    } catch (e) {
+        submitError.value = 'Failed to update invoice. Please try again'
+
+        setTimeout(() => {
+            submitError.value = ''
+        }, 1000)
+    }
 }
 </script>
 
@@ -176,5 +206,23 @@ button {
 button:disabled {
     opacity: 0.6;
     pointer-events: none;
+}
+
+.success {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.error-box {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 6px;
+    font-weight: 600;
 }
 </style>
