@@ -74,8 +74,7 @@
 
                     <button
                         :disabled="page >= lastPage"
-                        @click="changePage(page + 1)"
-                    >
+                        @click="changePage(page + 1)">
                         Next
                     </button>
                 </div>
@@ -177,8 +176,67 @@ tbody tr:hover {
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 16px;
     align-items: center;
+    gap: 12px;
     margin-top: 20px;
+    padding: 10px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #111827;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+    background: #f3f4f6;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.pagination span {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.controls select {
+    margin-left: 8px;
+    padding: 6px 28px 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    color: #111827;
+    cursor: pointer;
+    outline: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%),
+    linear-gradient(135deg, #6b7280 50%, transparent 50%);
+    background-position: calc(100% - 14px) calc(50% - 3px),
+    calc(100% - 9px) calc(50% - 3px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+}
+
+.controls select:hover {
+    border-color: #9ca3af;
+}
+
+.controls select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 </style>
