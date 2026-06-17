@@ -56,7 +56,9 @@ services:
         environment:
             HOST: 0.0.0.0
             PORT: 3000
-            NUXT_PUBLIC_API_BASE: http://test_invoices_nginx
+#            NUXT_PUBLIC_API_BASE: http://test_invoices_nginx
+            NUXT_API_BASE: http://test_invoices_nginx
+            NUXT_PUBLIC_API_BASE: http://localhost:8080
         networks:
             - app-network
 
