@@ -1,3 +1,20 @@
+**Інструкція запуску проєкту**
+
+* Клонувати прєкт
+* Перейти у дерікторію проєкту
+* Виконтати cp .env.example .env
+* Виконати `docker compose up -d --build`
+* Перейти у Backend контейнер `docker exec -it test_invoices_php8_4 bash`
+* Виконати `php artisan key:generate`
+* Виконати `php artisan migrate`
+* Вийти із контейнера
+* Перейти у Frontend контейнер `docker exec -it test_invoices_nuxt sh`
+* Виконати `npm install`
+* Вийти із контейнера
+
+Посилання на Backend: http://localhost:8080/  
+Посилання на Frontend: http://localhost:3000/
+
 **Структура Backend**
 
 Backend побудований на стандартній структурі Laravel із дотриманням принципів розділення відповідальності та чистої архітектури.
@@ -44,7 +61,7 @@ Pages (сторінки)
 * Додав би API-документацію
 * Додав би на фронтенді сторінку створеня інвойса
 
-**UX edge cases***
+**UX edge cases**
 
 У процесі розробки були враховані типові UX edge cases для забезпечення стабільної та передбачуваної поведінки інтерфейсу:
 
