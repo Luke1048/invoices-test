@@ -15,6 +15,12 @@
                 {{ submitError }}
             </div>
 
+            <NuxtLink
+                :to="`/invoices/${route.params.id}`"
+                class="back-button">
+                Back to invoice
+            </NuxtLink>
+
             <form class="form" @submit.prevent="onSubmit">
                 <div class="field">
                     <label>Net amount</label>
@@ -170,6 +176,21 @@ const onSubmit = async () => {
 </script>
 
 <style scoped>
+.back-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: #6b7280;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-button:hover {
+    background: #4b5563;
+}
+
 .form {
     max-width: 500px;
     display: flex;

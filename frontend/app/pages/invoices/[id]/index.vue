@@ -12,9 +12,14 @@
             <h1>Invoice {{ invoice.number }}</h1>
 
             <NuxtLink
+                to="/invoices"
+                class="back-button">
+                Back to invoices
+            </NuxtLink>
+
+            <NuxtLink
                 :to="`/invoices/${invoice.id}/edit`"
-                class="edit-button"
-            >
+                class="edit-button">
                 Edit invoice
             </NuxtLink>
 
@@ -157,6 +162,22 @@ const statusClass = (status) => {
 .badge-rejected {
     background: #fee2e2;
     color: #991b1b;
+}
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    margin-right: 10px;
+    padding: 8px 12px;
+    background: #6b7280;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-button:hover {
+    background: #4b5563;
 }
 
 .edit-button {
