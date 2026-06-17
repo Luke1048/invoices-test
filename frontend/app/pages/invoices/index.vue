@@ -2,7 +2,7 @@
     <div>
         <h1>Invoices</h1>
 
-        <div class="controls">
+        <div v-if="hasInvoices" class="controls">
             <label>
                 Per page:
                 <select
@@ -26,53 +26,59 @@
         </div>
 
         <div v-else>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Supplier</th>
-                        <th>Gross amount</th>
-                        <th>Status</th>
-                        <th>Due date</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr
-                        v-for="invoice in invoices"
-                        :key="invoice.id"
-                        class="row"
-                        @click="goToInvoice(invoice.id)"
-                    >
-                        <td>{{ invoice.number }}</td>
-                        <td>{{ invoice.supplier_name }}</td>
-                        <td>{{ invoice.gross_amount }}</td>
-                        <td>{{ invoice.status }}</td>
-                        <td>{{ invoice.due_date }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div v-if="!hasInvoices">
+                No invoices found
             </div>
 
-            <div class="pagination">
-                <button
-                    :disabled="page <= 1"
-                    @click="changePage(page - 1)"
-                >
-                    Previous
-                </button>
+            <div v-else>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Supplier</th>
+                            <th>Gross amount</th>
+                            <th>Status</th>
+                            <th>Due date</th>
+                        </tr>
+                        </thead>
 
-                <span>
-                    Page {{ page }} of {{ lastPage }}
-                </span>
+                        <tbody>
+                        <tr
+                            v-for="invoice in invoices"
+                            :key="invoice.id"
+                            class="row"
+                            @click="goToInvoice(invoice.id)"
+                        >
+                            <td>{{ invoice.number }}</td>
+                            <td>{{ invoice.supplier_name }}</td>
+                            <td>{{ invoice.gross_amount }}</td>
+                            <td>{{ invoice.status }}</td>
+                            <td>{{ invoice.due_date }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <button
-                    :disabled="page >= lastPage"
-                    @click="changePage(page + 1)"
-                >
-                    Next
-                </button>
+                <div class="pagination">
+                    <button
+                        :disabled="page <= 1"
+                        @click="changePage(page - 1)"
+                    >
+                        Previous
+                    </button>
+
+                    <span>
+                Page {{ page }} of {{ lastPage }}
+            </span>
+
+                    <button
+                        :disabled="page >= lastPage"
+                        @click="changePage(page + 1)"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -100,6 +106,8 @@ const { data, pending, error } = await useFetch('/api/invoices', {
 })
 
 const invoices = computed(() => data.value?.data || [])
+
+const hasInvoices = computed(() => invoices.value.length > 0)
 
 const lastPage = computed(() => data.value?.meta?.last_page || 1)
 
